@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `convergentDb3` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `convergentDb3`;
 -- MySQL dump 10.16  Distrib 10.1.26-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: convergentDb3
@@ -92,9 +94,13 @@ CREATE TABLE `AccountsStatus` (
   `Remarks` varchar(45) DEFAULT NULL,
   `DateResolved` date DEFAULT NULL,
   `dateSaved` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`idAccountsStatus`,`Accounts_idAccounts`),
+  `supervisorComment` varchar(45) DEFAULT NULL,
+  `Employees_idEmployees` int(11) NOT NULL,
+  PRIMARY KEY (`idAccountsStatus`,`Accounts_idAccounts`,`Employees_idEmployees`),
   KEY `fk_AccountsStatus_Accounts1_idx` (`Accounts_idAccounts`),
-  CONSTRAINT `fk_AccountsStatus_Accounts1` FOREIGN KEY (`Accounts_idAccounts`) REFERENCES `Accounts` (`idAccounts`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_AccountsStatus_Employees1_idx` (`Employees_idEmployees`),
+  CONSTRAINT `fk_AccountsStatus_Accounts1` FOREIGN KEY (`Accounts_idAccounts`) REFERENCES `Accounts` (`idAccounts`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_AccountsStatus_Employees1` FOREIGN KEY (`Employees_idEmployees`) REFERENCES `Employees` (`idEmployees`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -376,4 +382,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-18 11:20:09
+-- Dump completed on 2018-02-18 11:50:46
