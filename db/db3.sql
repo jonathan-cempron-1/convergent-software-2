@@ -59,6 +59,7 @@ CREATE TABLE `AccountsPersons` (
   `bday` date DEFAULT NULL,
   `isPersonInterest` varchar(45) DEFAULT NULL,
   `Accounts_idAccounts` int(11) NOT NULL,
+  `otherInfo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idAccountsPersons`,`Accounts_idAccounts`),
   KEY `fk_AccountsPersons_Accounts1_idx` (`Accounts_idAccounts`),
   CONSTRAINT `fk_AccountsPersons_Accounts1` FOREIGN KEY (`Accounts_idAccounts`) REFERENCES `Accounts` (`idAccounts`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -246,7 +247,7 @@ CREATE TABLE `Employees` (
   `gender` varchar(45) DEFAULT NULL,
   `bday` date DEFAULT NULL,
   `isActive` tinyint(1) DEFAULT '1',
-  `adminPrivilege` tinyint(1) DEFAULT '0',
+  `type` varchar(45) DEFAULT '0',
   PRIMARY KEY (`idEmployees`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -372,6 +373,34 @@ LOCK TABLES `Vehicles` WRITE;
 /*!40000 ALTER TABLE `Vehicles` DISABLE KEYS */;
 /*!40000 ALTER TABLE `Vehicles` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `otherInfo`
+--
+
+DROP TABLE IF EXISTS `otherInfo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `otherInfo` (
+  `idotherInfo` int(11) NOT NULL AUTO_INCREMENT,
+  `infoTitle` varchar(45) DEFAULT NULL,
+  `info` varchar(45) DEFAULT NULL,
+  `Accounts_idAccounts` int(11) NOT NULL,
+  `Accounts_Banks_idBanks` int(11) NOT NULL,
+  PRIMARY KEY (`idotherInfo`,`Accounts_idAccounts`,`Accounts_Banks_idBanks`),
+  KEY `fk_otherInfo_Accounts1_idx` (`Accounts_idAccounts`,`Accounts_Banks_idBanks`),
+  CONSTRAINT `fk_otherInfo_Accounts1` FOREIGN KEY (`Accounts_idAccounts`, `Accounts_Banks_idBanks`) REFERENCES `Accounts` (`idAccounts`, `Banks_idBanks`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `otherInfo`
+--
+
+LOCK TABLES `otherInfo` WRITE;
+/*!40000 ALTER TABLE `otherInfo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `otherInfo` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -382,4 +411,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-18 11:50:46
+-- Dump completed on 2018-02-18 14:00:47
