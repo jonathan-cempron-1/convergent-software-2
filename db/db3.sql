@@ -1,8 +1,6 @@
-CREATE DATABASE  IF NOT EXISTS `cenvergentDb3` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `cenvergentDb3`;
 -- MySQL dump 10.16  Distrib 10.1.26-MariaDB, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: cenvergentDb3
+-- Host: localhost    Database: convergentDb3
 -- ------------------------------------------------------
 -- Server version	10.1.26-MariaDB-0+deb9u1
 
@@ -378,4 +376,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-18  0:31:12
+-- Dump completed on 2018-02-18 11:20:09
