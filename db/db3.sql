@@ -272,6 +272,7 @@ CREATE TABLE `Locations` (
   `idLocations` int(11) NOT NULL AUTO_INCREMENT,
   `longitude` double DEFAULT NULL,
   `latitude` double DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idLocations`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -411,4 +412,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-18 14:00:47
+-- Dump completed on 2018-02-27 17:46:22
