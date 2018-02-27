@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package convergentsw2.gui;
+import convergentsw2.dao.*;
+import convergentsw2.starter.*;
 
 /**
  *
@@ -11,10 +13,12 @@ package convergentsw2.gui;
  */
 public class PnlSupervisor extends javax.swing.JPanel {
 
+    RuntimeData rtd;
     /**
      * Creates new form PnlSupervisor
      */
-    public PnlSupervisor() {
+    public PnlSupervisor(RuntimeData r) {
+        rtd = r;
         initComponents();
     }
 

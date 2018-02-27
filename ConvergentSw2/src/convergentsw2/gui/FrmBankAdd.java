@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package convergentsw2.gui;
+import convergentsw2.dao.*;
+import convergentsw2.starter.*;
 
 /**
  *
@@ -11,11 +13,14 @@ package convergentsw2.gui;
  */
 public class FrmBankAdd extends javax.swing.JFrame {
 
+    RuntimeData rtd;
     /**
      * Creates new form FrmBankAdd
      */
-    public FrmBankAdd() {
+    public FrmBankAdd(RuntimeData r) {
+        rtd = r;
         initComponents();
+        this.setVisible(true);
     }
 
     /**
@@ -78,10 +83,6 @@ public class FrmBankAdd extends javax.swing.JFrame {
             }
         ));
         jScrollPane2.setViewportView(jTable2);
-
-        jTextField1.setText("jTextField1");
-
-        jTextField2.setText("jTextField2");
 
         jButton1.setText("add contact");
 

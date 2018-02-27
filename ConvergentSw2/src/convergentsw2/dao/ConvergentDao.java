@@ -13,10 +13,10 @@ import convergentsw2.gui.*;
  */
 public class ConvergentDao {
     
-    //String url = "jdbc:mysql://localhost:3306/convergentDb3";
-    //String pass = "abc123";
-    String url = "jdbc:mysql://192.168.1.5:3306/convergentDb3";
-    String pass = "pkp420";
+    String url = "jdbc:mysql://localhost:3306/convergentDb3";
+    String pass = "abc123";
+    //String url = "jdbc:mysql://192.168.1.5:3306/convergentDb3";
+    //String pass = "pkp420";
     String user = "root";
     GenericDao dao = new GenericDao(url, user, pass);
     

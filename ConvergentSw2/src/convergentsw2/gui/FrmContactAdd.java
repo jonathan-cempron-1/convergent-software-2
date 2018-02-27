@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package convergentsw2.gui;
+import convergentsw2.dao.*;
+import convergentsw2.starter.*;
 
 /**
  *
@@ -11,11 +13,14 @@ package convergentsw2.gui;
  */
 public class FrmContactAdd extends javax.swing.JFrame {
 
+    RuntimeData rtd;
     /**
      * Creates new form FrmContactAdd
      */
-    public FrmContactAdd() {
+    public FrmContactAdd(RuntimeData r) {
+        rtd = r;
         initComponents();
+        this.setVisible(true);
     }
 
     /**

@@ -4,19 +4,20 @@
  * and open the template in the editor.
  */
 package convergentsw2.starter;
+import convergentsw2.dao.*;
+import convergentsw2.gui.*;
 
 /**
  *
  * @author jonats
  */
-public class ConvergentSw2 {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-        new RuntimeData();
+public class RuntimeData {
+    
+    int loggedUser;
+    ConvergentDao dao = new ConvergentDao();
+    
+    public RuntimeData(){
+        new FrmLogin(this);
     }
     
 }
