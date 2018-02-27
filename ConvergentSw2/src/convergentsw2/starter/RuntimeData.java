@@ -13,8 +13,8 @@ import convergentsw2.gui.*;
  */
 public class RuntimeData {
     
-    int loggedUser;
-    ConvergentDao dao = new ConvergentDao();
+    public int loggedUserId;
+    public ConvergentDao dao = new ConvergentDao();
     
     public RuntimeData(){
         new FrmLogin(this);

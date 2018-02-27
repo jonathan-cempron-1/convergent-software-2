@@ -1,0 +1,21 @@
+11100000-*	Employees
+22200000-*	ContactInfos
+33300000-*	Locations
+44400000-*	Address
+55500000-*	Banks
+		ContactInfos
+		Locations
+		Address
+66600000-*	Accounts
+77700000-*	Vehicles
+88800000-*	AccountsStatus
+99900000-*	otherInfo
+10100000-*	AccountsPersons
+		ContactInfos
+		Locations
+		Address
+10200000-	ScannedDocuments
+10300000-	Assignments
+10400000-	PromiseToPay
+		
+	

@@ -14,13 +14,29 @@ import convergentsw2.starter.*;
 public class FrmAccountDetail extends javax.swing.JFrame {
 
     RuntimeData rtd;
+    int accountId;
     /**
      * Creates new form FrmAccountDetail
      */
-    public FrmAccountDetail(RuntimeData r) {
+    public FrmAccountDetail(RuntimeData r, int idAccount) {
         rtd = r;
+        accountId = idAccount;
         initComponents();
+        updateAllDisplays();
         this.setVisible(true);
+    }
+    
+    void updateAllDisplays(){
+        String resolved = "unsolved";
+        if(rtd.dao.isAccountResolved(accountId))
+            resolved = "solved";
+        jLabel2.setText(resolved);
+        jLabel4.setText(rtd.dao.getAccountBankBranch(accountId));
+        jLabel6.setText(rtd.dao.getAccountVehicleInfo(accountId));
+        jLabel8.setText(rtd.dao.getAccountHandlingEmployee(accountId));
+        jTable1.setModel(rtd.dao.getAccountStatusTable(accountId));
+        jTable2.setModel(rtd.dao.getAccountPersonsTable(accountId));
+        jTable3.setModel(rtd.dao.getAccountOtherInfo(accountId));
     }
 
     /**

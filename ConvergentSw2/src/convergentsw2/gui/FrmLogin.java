@@ -6,6 +6,8 @@
 package convergentsw2.gui;
 import convergentsw2.dao.*;
 import convergentsw2.starter.*;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -45,6 +47,11 @@ public class FrmLogin extends javax.swing.JFrame {
         jLabel2.setText("password : ");
 
         jButton1.setText("log in");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -82,6 +89,19 @@ public class FrmLogin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String username = jTextField1.getText();
+        String password = new String(jPasswordField1.getPassword());
+        if(rtd.dao.isValidEmployeeLogin(username, password)){
+            rtd.loggedUserId = rtd.dao.getEmployeeId(username, password);
+            new FrmWindow(rtd);
+            this.setVisible(false);
+        }
+        else
+            JOptionPane.showMessageDialog(null, "invalid username or password please retry", "Something went wrong", JOptionPane.ERROR_MESSAGE);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
