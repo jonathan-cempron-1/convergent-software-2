@@ -1,0 +1,13 @@
+
+story 1
+1. employee logs on
+2. he sees the active accounts assigned to him
+3. he clicks on an account
+4. he adds status on an account
+
+
+story 2
+1. supervisor logs on
+2. he sees all active accounts
+3. he clicks on an account
+4. he adds comment on an account
