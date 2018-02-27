@@ -155,7 +155,7 @@ public class ConvergentDao {
     }
     
     public DefaultTableModel getAccountStatusTable(int accountId){
-        String query = "select * from AccountsStatus where Accounts_idAccounts = "+accountId+";";
+        String query = "select * from AccountsStatus where Accounts_idAccounts = "+accountId+" order by dateSaved desc;";
         return dao.queryTable(query);
     }
     
@@ -171,5 +171,19 @@ public class ConvergentDao {
     public DefaultTableModel getAccountOtherInfo(int accountId){
         String query = "select idotherInfo, infoTitle, info from otherInfo where Accounts_idAccounts = "+accountId+";";
         return dao.queryTable(query);
-    }   
+    }
+    
+    public void addAccountsStatus(int accountId, String client, String appliId, String collateral, String socmed, String fieldVisit, String skiptrace, String daily, String remarks, String dateResolved, int employeeId){
+        String query = "INSERT INTO `convergentDb3`.`AccountsStatus` (`Accounts_idAccounts`, `ClientStatus`, `AppliIdStatus`, `CollateralStatus`, `SocmedStatus`, `FieldVisitResults`, `SkiptraceResults`, `DailyStatus`, `Remarks`, `DateResolved`, `Employees_idEmployees`) "
+                + "VALUES ('"+accountId+"', '"+client+"', '"+appliId+"', '"+collateral+"', '"+socmed+"', '"+fieldVisit+"', '"+skiptrace+"', '"+daily+"', '"+remarks+"', '"+dateResolved+"', '"+employeeId+"');";
+        //System.out.println(query);
+        dao.updateDb(query);
+    }
+    
+    public void commentAccountStatus(int accountStatusId, String comment){
+        String query = "UPDATE `convergentDb3`.`AccountsStatus` \n" +
+                "SET `supervisorComment`='"+comment+"' \n" +
+                "WHERE `idAccountsStatus`='"+accountStatusId+"';";
+        dao.updateDb(query);
+    }
 }
