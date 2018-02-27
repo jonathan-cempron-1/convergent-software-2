@@ -33,7 +33,7 @@ CREATE TABLE `Accounts` (
   PRIMARY KEY (`idAccounts`,`Banks_idBanks`),
   KEY `fk_Accounts_Banks1_idx` (`Banks_idBanks`),
   CONSTRAINT `fk_Accounts_Banks1` FOREIGN KEY (`Banks_idBanks`) REFERENCES `Banks` (`idBanks`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=66600001 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,6 +42,7 @@ CREATE TABLE `Accounts` (
 
 LOCK TABLES `Accounts` WRITE;
 /*!40000 ALTER TABLE `Accounts` DISABLE KEYS */;
+INSERT INTO `Accounts` VALUES (66600000,'2018-02-02',NULL,0,55500000);
 /*!40000 ALTER TABLE `Accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,10 +61,11 @@ CREATE TABLE `AccountsPersons` (
   `isPersonInterest` varchar(45) DEFAULT NULL,
   `Accounts_idAccounts` int(11) NOT NULL,
   `otherInfo` varchar(45) DEFAULT NULL,
+  `isActive` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`idAccountsPersons`,`Accounts_idAccounts`),
   KEY `fk_AccountsPersons_Accounts1_idx` (`Accounts_idAccounts`),
   CONSTRAINT `fk_AccountsPersons_Accounts1` FOREIGN KEY (`Accounts_idAccounts`) REFERENCES `Accounts` (`idAccounts`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10100001 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,6 +74,7 @@ CREATE TABLE `AccountsPersons` (
 
 LOCK TABLES `AccountsPersons` WRITE;
 /*!40000 ALTER TABLE `AccountsPersons` DISABLE KEYS */;
+INSERT INTO `AccountsPersons` VALUES (10100000,'pepsi paloma','female','1980-01-01','1',66600000,'wanted',1);
 /*!40000 ALTER TABLE `AccountsPersons` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -102,7 +105,7 @@ CREATE TABLE `AccountsStatus` (
   KEY `fk_AccountsStatus_Employees1_idx` (`Employees_idEmployees`),
   CONSTRAINT `fk_AccountsStatus_Accounts1` FOREIGN KEY (`Accounts_idAccounts`) REFERENCES `Accounts` (`idAccounts`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_AccountsStatus_Employees1` FOREIGN KEY (`Employees_idEmployees`) REFERENCES `Employees` (`idEmployees`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=88800004 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -111,6 +114,7 @@ CREATE TABLE `AccountsStatus` (
 
 LOCK TABLES `AccountsStatus` WRITE;
 /*!40000 ALTER TABLE `AccountsStatus` DISABLE KEYS */;
+INSERT INTO `AccountsStatus` VALUES (88800000,66600000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2018-02-27 12:07:04',NULL,11100002),(88800001,66600000,'001a','001a','001a','001a','001a','001a','001a','001a','2013-01-01','2018-02-27 18:17:34','comment test',11100002),(88800002,66600000,'002b','002b','002b','002b','002b','002b','002b','002b','2013-01-01','2018-02-27 18:19:53','comment test',11100002),(88800003,66600000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2018-02-27 18:29:59','commenttest',11100001);
 /*!40000 ALTER TABLE `AccountsStatus` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -127,16 +131,10 @@ CREATE TABLE `Address` (
   `zipcode` varchar(45) DEFAULT NULL,
   `dateSaved` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `isActive` tinyint(1) DEFAULT '1',
-  `Locations_idLocations` int(11) NOT NULL,
-  `idOwner` int(11) NOT NULL,
-  PRIMARY KEY (`idAddress`),
-  KEY `fk_Address_Locations_idx` (`Locations_idLocations`),
-  KEY `fk_Address_Banks1_idx` (`idOwner`),
-  CONSTRAINT `fk_Address_AccountsPersons1` FOREIGN KEY (`idOwner`) REFERENCES `AccountsPersons` (`idAccountsPersons`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Address_Banks1` FOREIGN KEY (`idOwner`) REFERENCES `Banks` (`idBanks`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Address_Employees1` FOREIGN KEY (`idOwner`) REFERENCES `Employees` (`idEmployees`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Address_Locations` FOREIGN KEY (`Locations_idLocations`) REFERENCES `Locations` (`idLocations`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Locations_idLocations` int(11) DEFAULT NULL,
+  `idOwner` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idAddress`)
+) ENGINE=InnoDB AUTO_INCREMENT=44400005 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -145,6 +143,7 @@ CREATE TABLE `Address` (
 
 LOCK TABLES `Address` WRITE;
 /*!40000 ALTER TABLE `Address` DISABLE KEYS */;
+INSERT INTO `Address` VALUES (44400000,'aurora cor. broadway','1112','2018-02-27 11:21:12',1,33300000,11100000),(44400001,'aurora cor. broadway',NULL,'2018-02-27 11:21:12',1,33300000,11100001),(44400002,'aurora cor. broadway',NULL,'2018-02-27 11:21:12',1,0,11100002),(44400003,'gilmore cor.aurora','1112','2018-02-27 11:24:28',1,33300000,55500000),(44400004,'cilmore cor.aurora','','2018-02-27 12:14:00',1,NULL,10100000);
 /*!40000 ALTER TABLE `Address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -166,7 +165,7 @@ CREATE TABLE `Assignments` (
   KEY `fk_Assignments_Accounts1_idx` (`Accounts_idAccounts`),
   CONSTRAINT `fk_Assignments_Accounts1` FOREIGN KEY (`Accounts_idAccounts`) REFERENCES `Accounts` (`idAccounts`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Assignments_Employees1` FOREIGN KEY (`Employees_idEmployees`) REFERENCES `Employees` (`idEmployees`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10300001 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -175,6 +174,7 @@ CREATE TABLE `Assignments` (
 
 LOCK TABLES `Assignments` WRITE;
 /*!40000 ALTER TABLE `Assignments` DISABLE KEYS */;
+INSERT INTO `Assignments` VALUES (10300000,'2018-02-02',NULL,11100002,66600000);
 /*!40000 ALTER TABLE `Assignments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -190,7 +190,7 @@ CREATE TABLE `Banks` (
   `name` varchar(45) DEFAULT NULL,
   `branch` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idBanks`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=55500001 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -199,6 +199,7 @@ CREATE TABLE `Banks` (
 
 LOCK TABLES `Banks` WRITE;
 /*!40000 ALTER TABLE `Banks` DISABLE KEYS */;
+INSERT INTO `Banks` VALUES (55500000,'bdo','gilmore');
 /*!40000 ALTER TABLE `Banks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -214,13 +215,9 @@ CREATE TABLE `ContactInfos` (
   `type` varchar(45) DEFAULT NULL,
   `contactInfo` varchar(45) DEFAULT NULL,
   `isActive` tinyint(1) DEFAULT '1',
-  `idOwner` int(11) NOT NULL,
-  PRIMARY KEY (`idContactInfos`),
-  KEY `fk_ContactInfos_Banks1_idx` (`idOwner`),
-  CONSTRAINT `fk_ContactInfos_AccountsPersons1` FOREIGN KEY (`idOwner`) REFERENCES `AccountsPersons` (`idAccountsPersons`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ContactInfos_Banks1` FOREIGN KEY (`idOwner`) REFERENCES `Banks` (`idBanks`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ContactInfos_Employees1` FOREIGN KEY (`idOwner`) REFERENCES `Employees` (`idEmployees`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `idOwner` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idContactInfos`)
+) ENGINE=InnoDB AUTO_INCREMENT=22200005 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -229,6 +226,7 @@ CREATE TABLE `ContactInfos` (
 
 LOCK TABLES `ContactInfos` WRITE;
 /*!40000 ALTER TABLE `ContactInfos` DISABLE KEYS */;
+INSERT INTO `ContactInfos` VALUES (22200000,'celno','09121232323',1,11100000),(22200001,'celno','09121232323',1,11100001),(22200002,'delno','09121232323',1,11100002),(22200003,'telno','1234567',1,55500000),(22200004,'telno','7654321',1,10100000);
 /*!40000 ALTER TABLE `ContactInfos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -249,7 +247,7 @@ CREATE TABLE `Employees` (
   `isActive` tinyint(1) DEFAULT '1',
   `type` varchar(45) DEFAULT '0',
   PRIMARY KEY (`idEmployees`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11100004 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -258,6 +256,7 @@ CREATE TABLE `Employees` (
 
 LOCK TABLES `Employees` WRITE;
 /*!40000 ALTER TABLE `Employees` DISABLE KEYS */;
+INSERT INTO `Employees` VALUES (11100000,'tito','abc123','tito sotto','male','1980-01-01',1,'admin'),(11100001,'vic','abc123','vic sotto','male','1980-01-01',1,'supervisor'),(11100002,'joey','abc123','joey de leon','male','1980-01-01',1,'agent'),(11100003,'pepsi','abc123','pepsi paloma','female','1980-01-01',0,'agent');
 /*!40000 ALTER TABLE `Employees` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -274,7 +273,7 @@ CREATE TABLE `Locations` (
   `latitude` double DEFAULT NULL,
   `name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idLocations`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33300001 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -283,6 +282,7 @@ CREATE TABLE `Locations` (
 
 LOCK TABLES `Locations` WRITE;
 /*!40000 ALTER TABLE `Locations` DISABLE KEYS */;
+INSERT INTO `Locations` VALUES (33300000,121.1,14.37,'gilmore');
 /*!40000 ALTER TABLE `Locations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -363,7 +363,7 @@ CREATE TABLE `Vehicles` (
   PRIMARY KEY (`idVehicles`,`Accounts_idAccounts`),
   KEY `fk_Vehicles_Accounts1_idx` (`Accounts_idAccounts`),
   CONSTRAINT `fk_Vehicles_Accounts1` FOREIGN KEY (`Accounts_idAccounts`) REFERENCES `Accounts` (`idAccounts`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=77700001 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -372,6 +372,7 @@ CREATE TABLE `Vehicles` (
 
 LOCK TABLES `Vehicles` WRITE;
 /*!40000 ALTER TABLE `Vehicles` DISABLE KEYS */;
+INSERT INTO `Vehicles` VALUES (77700000,'toyota','corolla','1990','gray','tuv012','gh23kdhf','aqwdj7iq83',66600000);
 /*!40000 ALTER TABLE `Vehicles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -387,11 +388,10 @@ CREATE TABLE `otherInfo` (
   `infoTitle` varchar(45) DEFAULT NULL,
   `info` varchar(45) DEFAULT NULL,
   `Accounts_idAccounts` int(11) NOT NULL,
-  `Accounts_Banks_idBanks` int(11) NOT NULL,
-  PRIMARY KEY (`idotherInfo`,`Accounts_idAccounts`,`Accounts_Banks_idBanks`),
-  KEY `fk_otherInfo_Accounts1_idx` (`Accounts_idAccounts`,`Accounts_Banks_idBanks`),
-  CONSTRAINT `fk_otherInfo_Accounts1` FOREIGN KEY (`Accounts_idAccounts`, `Accounts_Banks_idBanks`) REFERENCES `Accounts` (`idAccounts`, `Banks_idBanks`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`idotherInfo`,`Accounts_idAccounts`),
+  KEY `fk_otherInfo_Accounts1_idx` (`Accounts_idAccounts`),
+  CONSTRAINT `fk_otherInfo_Accounts1` FOREIGN KEY (`Accounts_idAccounts`) REFERENCES `Accounts` (`idAccounts`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=99900001 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -400,6 +400,7 @@ CREATE TABLE `otherInfo` (
 
 LOCK TABLES `otherInfo` WRITE;
 /*!40000 ALTER TABLE `otherInfo` DISABLE KEYS */;
+INSERT INTO `otherInfo` VALUES (99900000,'payment','123123',66600000);
 /*!40000 ALTER TABLE `otherInfo` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -412,4 +413,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-27 17:46:22
+-- Dump completed on 2018-02-28  2:45:08
