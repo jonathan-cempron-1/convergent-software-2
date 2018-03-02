@@ -23,7 +23,22 @@ public class FrmAccountDetail extends javax.swing.JFrame {
         accountId = idAccount;
         initComponents();
         updateAllDisplays();
+        interfacePrivilleges();
         this.setVisible(true);
+    }
+    
+    void interfacePrivilleges(){
+        String employeeType = rtd.dao.getEmployeeType(rtd.loggedUserId);
+        if(employeeType.equalsIgnoreCase("agent")){
+            jButton3.setEnabled(false);
+            jButton8.setEnabled(false);
+            jButton9.setEnabled(false);
+            jButton10.setEnabled(false);
+        } else if(employeeType.equalsIgnoreCase("supervisor")){
+            jButton8.setEnabled(false);
+            jButton9.setEnabled(false);
+            jButton10.setEnabled(false);            
+        }
     }
     
     void updateAllDisplays(){

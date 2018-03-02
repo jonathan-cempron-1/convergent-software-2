@@ -87,6 +87,19 @@ public class ConvergentDao {
                 "and Employees_idEmployees = "+employeeId+";";
         return dao.queryTable(query);
     }
+
+    public DefaultTableModel getSupervisorTable(){
+        String query = "select idAccounts, Banks.name, Banks.branch, make, model, year, color, plateNumber, AccountsPersons.completeName, contactInfo, Employees.completeName\n" +
+                "from Assignments, Accounts, Banks, Vehicles, AccountsPersons, ContactInfos, Employees\n" +
+                "where idAccounts = Assignments.Accounts_idAccounts\n" +
+                "and Banks_idBanks = idBanks\n" +
+                "and Employees_idEmployees = idEmployees\n" +
+                "and idAccounts = Vehicles.Accounts_idAccounts\n" +
+                "and idAccounts = AccountsPersons.Accounts_idAccounts\n" +
+                "and idAccountsPersons = ContactInfos.idOwner\n" +
+                "and isResolved = 0;";
+        return dao.queryTable(query);
+    }
     
     public boolean isAccountResolved(int accountId){
         String query = "select * from Accounts where idAccounts = "+accountId+";";
