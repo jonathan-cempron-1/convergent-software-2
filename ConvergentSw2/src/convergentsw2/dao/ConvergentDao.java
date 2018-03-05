@@ -305,4 +305,30 @@ public class ConvergentDao {
                 + "VALUES ('"+fulladdr+"', '"+zipcode+"', '1', '"+idOwner+"');";
         dao.updateDb(query);
     }
+    
+    public DefaultTableModel getBanksTable(){
+        String query = "select * from Banks;";
+        return dao.queryTable(query);
+    }
+    
+    public void addBank(String name, String branch){
+        String query = "INSERT INTO `convergentDb3`.`Banks` (`name`, `branch`) "
+                + "VALUES ('"+name+"', '"+branch+"');";
+        dao.updateDb(query);
+    }
+    
+    public int getBankId(String name, String branch){
+        int ret = 0;
+        String query = "select * from Banks "
+                + "where name like '"+name+"' "
+                + "and branch like '"+branch+"';";
+        ResultSet rs = dao.queryDb(query);
+        try{
+           rs.next();
+           ret = rs.getInt("idBanks");
+        }catch(Exception e){
+            e.printStackTrace();
+        }        
+        return ret;
+    }
 }

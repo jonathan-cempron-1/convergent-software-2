@@ -23,7 +23,7 @@ public class FrmEmployeeAdd extends javax.swing.JFrame {
         initComponents();
         employeeId = eid;
         if(eid < 0)
-            updateInterface(true); //adding employee
+            updateInterface(true); //adding employee mode
         else
             updateInterface(false); //adding contacts or addess
         this.setVisible(true);
