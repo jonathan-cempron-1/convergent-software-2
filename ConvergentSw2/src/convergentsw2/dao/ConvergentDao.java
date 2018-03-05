@@ -113,6 +113,16 @@ public class ConvergentDao {
         return dao.queryTable(query);
     }
     
+    public DefaultTableModel getAllAccountsTable(){
+        String query = "select idAccounts, isResolved dateStart, Banks.name, branch, year, make, model, color, plateNumber, completeName, contactInfo\n" +
+                "from Accounts, Banks, Vehicles, AccountsPersons, ContactInfos\n" +
+                "where Accounts.Banks_idBanks = idBanks\n" +
+                "and idAccounts = Vehicles.Accounts_idAccounts\n" +
+                "and idAccounts = AccountsPersons.Accounts_idAccounts\n" +
+                "and idAccountsPersons = ContactInfos.idOwner";
+        return dao.queryTable(query);
+    }
+    
     public boolean isAccountResolved(int accountId){
         String query = "select * from Accounts where idAccounts = "+accountId+";";
         ResultSet rs = dao.queryDb(query);
@@ -330,5 +340,40 @@ public class ConvergentDao {
             e.printStackTrace();
         }        
         return ret;
+    }
+    
+    public LinkedList<String> getBankList(){
+        LinkedList<String> ret = new LinkedList<String>();
+        String query = "select * from Banks;";
+        ResultSet rs = dao.queryDb(query);
+        try{
+           while(rs.next())
+               ret.add(rs.getInt("idBanks")+"_"+rs.getString("name")+"_"+rs.getString("branch"));
+        }catch(Exception e){
+            e.printStackTrace();
+        }        
+        return ret;
+    }
+    
+    public int addAccountReturnId(int bankid){
+        String query = "INSERT INTO `convergentDb3`.`Accounts` (`Banks_idBanks`) VALUES ('"+bankid+"');";
+        return dao.updateDbReturnId(query);
+    }
+    
+    public void addVehicle(String make, String model, String year, String color, String plnum, String chnum, String ennum, int accountId){
+        String query = "INSERT INTO `convergentDb3`.`Vehicles` (`make`, `model`, `year`, `color`, `plateNumber`, `chassisNumber`, `engineNumber`, `Accounts_idAccounts`) VALUES "
+                + "('"+make+"', '"+model+"', '"+year+"', '"+color+"', '"+plnum+"', '"+chnum+"', '"+ennum+"', '"+accountId+"');";
+        dao.updateDb(query);
+    }
+    
+    public int addAccountPersonReturnId(String name, String gender, String bday, int isPersonInterest, int accountId, String otherInfo){
+        String query = "INSERT INTO `convergentDb3`.`AccountsPersons` (`completeName`, `gender`, `bday`, `isPersonInterest`, `Accounts_idAccounts`, `otherInfo`, `isActive`) "
+                + "VALUES ('"+name+"', '"+gender+"', '"+bday+"', '"+isPersonInterest+"', '"+accountId+"', '"+otherInfo+"', '1');";
+        return dao.updateDbReturnId(query);
+    }
+    
+    public DefaultTableModel getAccountPersonTable(int accountId){
+        String query = "select * from AccountsPersons where Accounts_idAccounts = "+accountId+";";
+        return dao.queryTable(query);
     }
 }

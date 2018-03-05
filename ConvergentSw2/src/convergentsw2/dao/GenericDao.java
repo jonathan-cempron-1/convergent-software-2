@@ -83,6 +83,36 @@ public class GenericDao {
             }
         }    
     }    
+
+    public int updateDbReturnId(String query){
+        int ret = 0;
+        try{
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()){
+                ret=rs.getInt(1);
+            }
+            rs.close();
+            stmt.close();
+            this.attempts = 0;
+        }catch(Exception e){
+            e.printStackTrace();
+            try{
+                conn = DriverManager.getConnection(url, user, pass);
+            }catch(Exception a){
+                a.printStackTrace();
+            }
+            this.attempts += 1;
+            if(this.attempts < this.maxRetries){
+                updateDb(query);
+            } else{
+                // show error dialog
+                this.showErrorConnection();
+            }
+        }
+        return ret;
+    }  
     
     public ResultSet queryDb(String query){
         ResultSet ret = null;
