@@ -6,6 +6,8 @@
 package convergentsw2.gui;
 import convergentsw2.dao.*;
 import convergentsw2.starter.*;
+import java.util.LinkedList;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -14,12 +16,18 @@ import convergentsw2.starter.*;
 public class FrmAddressAdd extends javax.swing.JFrame {
 
     RuntimeData rtd;
+    int ownerId;
+    String nonChosen = "- chose location -";
     /**
      * Creates new form FrmAddressAdd
      */
-    public FrmAddressAdd(RuntimeData r) {
+    public FrmAddressAdd(RuntimeData r, int idOwner) {
         rtd = r;
+        ownerId = idOwner;
         initComponents();
+        LinkedList<String> locationNames = rtd.dao.getLocationsNames();
+        locationNames.addFirst(nonChosen);
+        jComboBox1.setModel(new DefaultComboBoxModel(locationNames.toArray()));
         this.setVisible(true);
     }
 
@@ -61,8 +69,18 @@ public class FrmAddressAdd extends javax.swing.JFrame {
         jLabel6.setText("latitude : ");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("add address");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -125,6 +143,53 @@ public class FrmAddressAdd extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+        String selected = jComboBox1.getSelectedItem().toString();
+        if(selected.equals(nonChosen)){
+            jTextField3.setText("");
+            jTextField4.setText("");
+            jTextField5.setText("");
+        } else {
+            jTextField3.setText(selected);
+            jTextField4.setText(""+rtd.dao.getLocationLongitude(selected));
+            jTextField5.setText(""+rtd.dao.getLocationLatitude(selected));
+            jTextField3.setEditable(false);
+            jTextField4.setEditable(false);
+            jTextField5.setEditable(false);
+        }
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String completeAddress = jTextField1.getText();
+        String zipcode = jTextField2.getText();
+        String selected = jComboBox1.getSelectedItem().toString();
+        if(selected.equals(nonChosen)){
+            // no location is selected
+            if(jTextField3.getText().equals("")||jTextField4.getText().equals("")||jTextField5.getText().equals("")){
+                // no location is selected and insufficient info provided
+                rtd.dao.addAddressIncomplete(completeAddress, zipcode, ownerId);
+            } else {
+                // sufficient info is provided
+                String locname = jTextField3.getText();
+                double longitude = Double.parseDouble(jTextField4.getText());
+                double latitude = Double.parseDouble(jTextField5.getText());
+                rtd.dao.addLocation(locname, longitude+"", latitude+"");
+                int locationId = rtd.dao.getLocationId(locname, longitude, latitude);
+                rtd.dao.addAddressComplete(completeAddress, zipcode, locationId, ownerId);
+            }         
+        } else {
+            // location is selected from combobox
+            String locname = jTextField3.getText();
+            double longitude = Double.parseDouble(jTextField4.getText());
+            double latitude = Double.parseDouble(jTextField5.getText());
+            int locationId = rtd.dao.getLocationId(locname, longitude, latitude);
+            rtd.dao.addAddressComplete(completeAddress, zipcode, locationId, ownerId);
+        }
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

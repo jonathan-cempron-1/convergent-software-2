@@ -7,6 +7,7 @@ package convergentsw2.dao;
 import convergentsw2.starter.*;
 import convergentsw2.gui.*;
 import java.sql.ResultSet;
+import java.util.LinkedList;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -35,6 +36,12 @@ public class ConvergentDao {
         }
         return false;
     }    
+    
+    public void addEmployee(String uname, String pword, String fullName, String gender, String bday, String type){
+        String query = "INSERT INTO `convergentDb3`.`Employees` (`username`, `password`, `completeName`, `gender`, `bday`, `isActive`, `type`) "
+                + "VALUES ('"+uname+"', '"+pword+"', '"+fullName+"', '"+gender+"', '"+bday+"', '1', '"+type+"');";
+        dao.updateDb(query);
+    }
     
     public int getEmployeeId(String username, String password){
         int ret = 0;
@@ -73,6 +80,11 @@ public class ConvergentDao {
             e.printStackTrace();
         }
         return ret;
+    }
+    
+    public DefaultTableModel getEmployeeAllTable(){
+        String query = "select * from Employees;";
+        return dao.queryTable(query);
     }
     
     public DefaultTableModel getAgentAssignmentTable(int employeeId){
@@ -197,6 +209,100 @@ public class ConvergentDao {
         String query = "UPDATE `convergentDb3`.`AccountsStatus` \n" +
                 "SET `supervisorComment`='"+comment+"' \n" +
                 "WHERE `idAccountsStatus`='"+accountStatusId+"';";
+        dao.updateDb(query);
+    }
+    
+    public DefaultTableModel getLocationsAllTable(){
+        String query = "select * from Locations;";
+        return dao.queryTable(query);
+    }  
+   
+    public void addLocation(String location, String longitude, String latitude){
+        String query = "INSERT INTO `convergentDb3`.`Locations` (`longitude`, `latitude`, `name`) VALUES ('"+longitude+"', '"+latitude+"', '"+location+"');";
+        dao.updateDb(query);
+    }
+    
+    public LinkedList<String> getLocationsNames(){
+        LinkedList<String> ret = new LinkedList<String>();
+        String query = "select name from Locations";
+        ResultSet rs = dao.queryDb(query);
+        try{
+            while(rs.next()) {
+                ret.add(rs.getString("name"));
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }        
+        return ret;
+    }
+
+    public Double getLocationLongitude(String name){
+        Double ret = 0.0;
+        String query = "select * from Locations where name like '"+name+"';";
+        ResultSet rs = dao.queryDb(query);
+        try{
+           rs.next();
+           ret = rs.getDouble("longitude");
+        }catch(Exception e){
+            e.printStackTrace();
+        }        
+        return ret;
+    }
+
+    public Double getLocationLatitude(String name){
+        Double ret = 0.0;
+        String query = "select * from Locations where name like '"+name+"';";
+        ResultSet rs = dao.queryDb(query);
+        try{
+           rs.next();
+           ret = rs.getDouble("latitude");
+        }catch(Exception e){
+            e.printStackTrace();
+        }        
+        return ret;
+    }
+    
+    public int getLocationId(String name, Double longitude, Double latitude){
+        int ret = 0;
+        String query = "select * from Locations\n" +
+                "where name like '"+name+"'\n" +
+                "and longitude = "+longitude+"\n" +
+                "and latitude = "+latitude+";";
+        ResultSet rs = dao.queryDb(query);
+        try{
+           rs.next();
+           ret = rs.getInt("idLocations");
+        }catch(Exception e){
+            e.printStackTrace();
+        }        
+        return ret;
+    }
+    
+    public void addContactInfos(String type, String info, int idOwner){
+        String query = "INSERT INTO `convergentDb3`.`ContactInfos` (`type`, `contactInfo`, `isActive`, `idOwner`) "
+                + "VALUES ('"+type+"', '"+info+"', '1', '"+idOwner+"');";
+        dao.updateDb(query);
+    }
+    
+    public DefaultTableModel getContactsTable(int idOwner){
+        String query = "select * from ContactInfos where idOwner = "+idOwner+";";
+        return dao.queryTable(query);
+    }
+    
+    public DefaultTableModel getAddressTable(int idOwner){
+        String query = "select * from Address where idOwner = "+idOwner+";";
+        return dao.queryTable(query);
+    }
+    
+    public void addAddressComplete(String fulladdr, String zipcode, int idLocations, int idOwner){
+        String query = "INSERT INTO `convergentDb3`.`Address` (`completeAddress`, `zipcode`, `isActive`, `Locations_idLocations`, `idOwner`) "
+                + "VALUES ('"+fulladdr+"', '"+zipcode+"', '1', '"+idLocations+"', '"+idOwner+"');";
+        dao.updateDb(query);
+    }
+    
+    public void addAddressIncomplete(String fulladdr, String zipcode, int idOwner){
+        String query = "INSERT INTO `convergentDb3`.`Address` (`completeAddress`, `zipcode`, `isActive`, `idOwner`) "
+                + "VALUES ('"+fulladdr+"', '"+zipcode+"', '1', '"+idOwner+"');";
         dao.updateDb(query);
     }
 }
