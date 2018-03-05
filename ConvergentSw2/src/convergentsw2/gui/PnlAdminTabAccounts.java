@@ -6,6 +6,10 @@
 package convergentsw2.gui;
 import convergentsw2.dao.*;
 import convergentsw2.starter.*;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JTable;
 
 /**
  *
@@ -21,7 +25,17 @@ public class PnlAdminTabAccounts extends javax.swing.JPanel {
         rtd = r;
         initComponents();
         updateTable();
-        
+        jTable1.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent mouseEvent) {
+                JTable table =(JTable) mouseEvent.getSource();
+                Point point = mouseEvent.getPoint();
+                int row = table.rowAtPoint(point);
+                if (mouseEvent.getClickCount() == 2){
+                    int idAccount = (int)jTable1.getValueAt(row, 0);
+                    new FrmAccountDetail(rtd, idAccount);
+                }
+            }
+        });
     }
     
     private void updateTable(){

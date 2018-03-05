@@ -93,7 +93,7 @@ public class FrmAccountDetail extends javax.swing.JFrame {
         jButton10 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("resolution status : ");
 
@@ -268,6 +268,11 @@ public class FrmAccountDetail extends javax.swing.JFrame {
         jButton9.setText("unresolved:terminate");
 
         jButton10.setText("(re)assign");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -378,6 +383,11 @@ public class FrmAccountDetail extends javax.swing.JFrame {
         int accountStatusId = (int)jTable1.getValueAt(0, 0);
         new FrmCommentStatus(rtd, accountStatusId);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+        new FrmReassign(rtd, accountId);
+    }//GEN-LAST:event_jButton10ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

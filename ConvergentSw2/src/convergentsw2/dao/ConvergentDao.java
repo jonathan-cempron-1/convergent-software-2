@@ -56,6 +56,19 @@ public class ConvergentDao {
         return ret;
     }    
     
+    public LinkedList<String> getEmployeeList(){
+        LinkedList<String> ret = new LinkedList<String>();
+        String query = "select * from Employees;";
+        ResultSet rs = dao.queryDb(query);
+        try{
+            while(rs.next())
+                ret.add(rs.getInt("idEmployees")+"_"+rs.getString("completeName"));
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return ret;
+    }
+    
     public String getEmployeeType(int employeeId){
         String ret = "";
         String query = "select type from Employees where idEmployees = "+employeeId+";";
@@ -375,5 +388,11 @@ public class ConvergentDao {
     public DefaultTableModel getAccountPersonTable(int accountId){
         String query = "select * from AccountsPersons where Accounts_idAccounts = "+accountId+";";
         return dao.queryTable(query);
+    }
+    
+    public void addAssignment(int employeeId, int accountId){
+        String query = "INSERT INTO `convergentDb3`.`Assignments` (`Employees_idEmployees`, `Accounts_idAccounts`) "
+                + "VALUES ('"+employeeId+"', '"+accountId+"');";
+        dao.updateDb(query);
     }
 }
