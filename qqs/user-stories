@@ -32,3 +32,10 @@
 2. he sees all accounts
 3. he clicks on an account
 4. he assigns an account to an employee
+
+* story 7
+1. agent logs on
+2. he sees all accounts assigned to him
+3. he clicks an account
+4. he add status on an account
+5. when the add status window shows up it is pre-filled with latest status

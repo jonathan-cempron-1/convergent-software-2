@@ -207,6 +207,27 @@ public class ConvergentDao {
         return dao.queryTable(query);
     }
     
+    public String[] getLatestAccountStatus(int accountId){
+        String[] ret = {"","","","","","","","",""};
+        String query = "select * from AccountsStatus where Accounts_idAccounts = "+accountId+" order by dateSaved desc;";
+        ResultSet rs = dao.queryDb(query);
+        try{
+            rs.next();
+            ret[0] = rs.getString("ClientStatus");
+            ret[1] = rs.getString("AppliIdStatus");
+            ret[2] = rs.getString("CollateralStatus");
+            ret[3] = rs.getString("SocmedStatus");
+            ret[4] = rs.getString("FieldVisitResults");
+            ret[5] = rs.getString("SkiptraceResults");
+            ret[6] = rs.getString("DailyStatus");
+            ret[7] = rs.getString("Remarks");
+            //ret[8] = rs.getString("");//date here
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return ret;
+    }
+    
     public DefaultTableModel getAccountPersonsTable(int accountId){
         String query = "select idAccountsPersons, completeName, isPersonInterest, contactInfo, gender, bday\n" +
                 "from AccountsPersons, ContactInfos\n" +

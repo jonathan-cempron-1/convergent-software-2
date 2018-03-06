@@ -22,6 +22,15 @@ public class FrmStatusAdd extends javax.swing.JFrame {
         rtd = r;
         accountId = idAccount;
         initComponents();
+        String[] prefill = rtd.dao.getLatestAccountStatus(accountId);
+        jTextField1.setText(prefill[0]);
+        jTextField2.setText(prefill[1]);
+        jTextField3.setText(prefill[2]);
+        jTextField4.setText(prefill[3]);
+        jTextField5.setText(prefill[4]);
+        jTextField6.setText(prefill[5]);
+        jTextField7.setText(prefill[6]);
+        jTextField8.setText(prefill[7]);
         this.setVisible(true);
     }
 
