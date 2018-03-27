@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package convergentsw2.starter;
+import com.sun.java.swing.plaf.motif.MotifLookAndFeel;
+import javax.swing.*;
 
 /**
  *

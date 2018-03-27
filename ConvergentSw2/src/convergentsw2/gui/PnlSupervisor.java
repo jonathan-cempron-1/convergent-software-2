@@ -7,8 +7,11 @@ package convergentsw2.gui;
 import convergentsw2.dao.*;
 import convergentsw2.starter.*;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
 
 /**
@@ -35,6 +38,39 @@ public class PnlSupervisor extends javax.swing.JPanel {
                 }
             }
         });
+                jComboBox1.addActionListener (new ActionListener () {
+            public void actionPerformed(ActionEvent e) {
+                String selected = jComboBox1.getSelectedItem().toString();
+                if(selected.equals("ClientStatus")){
+                    String[] arr = {"POSITIVE","NEGATIVE"};
+                    jComboBox2.setModel(new DefaultComboBoxModel(arr));
+                }
+                if(selected.equals("AppliIdStatus")){
+                    String[] arr = {"-","AVAILABLE","FOR REQUEST","NOT AVAILABLE"};
+                    jComboBox2.setModel(new DefaultComboBoxModel(arr));
+                }
+                if(selected.equals("CollateralStatus")){
+                    String[] arr = {"-","POSITIVE","NEGATIVE"};
+                    jComboBox2.setModel(new DefaultComboBoxModel(arr));
+                }
+                if(selected.equals("SocmedStatus")){
+                    String[] arr = {"-","POSITIVE","NEGATIVE"};
+                    jComboBox2.setModel(new DefaultComboBoxModel(arr));
+                }
+                if(selected.equals("FieldVisitResults")){
+                    String[] arr = {"-","FOR FIELD VISIT","DONE FIELD VIST","FOR REVISIT"};
+                    jComboBox2.setModel(new DefaultComboBoxModel(arr));
+                }
+                if(selected.equals("SkiptraceResults")){
+                    String[] arr = {"-","WITH LEADS","NO LEADS","FOR FURTHER SKIPS"};
+                    jComboBox2.setModel(new DefaultComboBoxModel(arr));
+                }
+                if(selected.equals("DailyStatus")){
+                    String[] arr = {"-","UNDERNEGO","PTP","FOR SKIPS","REPO","PAID","LMSG","UNCON","PAYOFF","BP","CASE FILE","FOR RTC","NEW ENDO","REFUSE LEGAL","HARD ACCOUNT","FOR FIELD VISIT","NIOP","PULLOUT"};
+                    jComboBox2.setModel(new DefaultComboBoxModel(arr));
+                }
+            }
+        });
         updateSupervisorTable();
     }
     
@@ -56,6 +92,11 @@ public class PnlSupervisor extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jButton2 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -71,6 +112,26 @@ public class PnlSupervisor extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("refresh");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("search field : ");
+
+        jLabel2.setText("search value : ");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "ClientStatus", "AppliIdStatus", "CollateralStatus", "SocmedStatus", "FieldVisitResults", "SkiptraceResults", "DailyStatus" }));
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", " " }));
+
+        jButton2.setText("search");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -82,23 +143,63 @@ public class PnlSupervisor extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton1))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+        String field = jComboBox1.getSelectedItem().toString();
+        String search = jComboBox2.getSelectedItem().toString();
+        if(!field.equals("-")&&!search.equals("-"))
+            jTable1.setModel(rtd.dao.getSupervisorSearchTable(field, search));
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        jComboBox1.setSelectedItem("-");
+        jComboBox2.setSelectedItem("-");
+        updateSupervisorTable();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

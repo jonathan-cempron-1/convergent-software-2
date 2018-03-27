@@ -7,6 +7,7 @@ package convergentsw2.gui;
 import convergentsw2.dao.*;
 import convergentsw2.starter.*;
 import javax.swing.ImageIcon;
+import javax.swing.UIManager;
 
 /**
  *
@@ -20,6 +21,16 @@ public class FrmWindow extends javax.swing.JFrame {
      */
     public FrmWindow(RuntimeData r) {
         rtd = r;
+        
+        try {
+            // Set cross-platform Java L&F (also called "Metal")
+            UIManager.setLookAndFeel(
+            UIManager.getSystemLookAndFeelClassName());
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        } 
+        
         initComponents();
         ImageIcon icon = new ImageIcon();
         String employeeType = rtd.dao.getEmployeeType(rtd.loggedUserId);

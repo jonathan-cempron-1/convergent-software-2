@@ -19,7 +19,7 @@ public class ConvergentDao {
     String url = "jdbc:mysql://localhost:3306/convergentDb3";
     String pass = "abc123";
     //String url = "jdbc:mysql://192.168.1.5:3306/convergentDb3";
-    //String pass = "pkp420";
+    //tring pass = "pkp420";
     String user = "root";
     GenericDao dao = new GenericDao(url, user, pass);
     
@@ -112,7 +112,36 @@ public class ConvergentDao {
                 "and Employees_idEmployees = "+employeeId+";";
         return dao.queryTable(query);
     }
+    
+    public DefaultTableModel getAgentSearchTable(int eid, String field, String search){
+        String query = "select distinct idAccounts, Banks.name, Banks.branch, make, model, year, color, plateNumber, completeName, contactInfo\n" +
+                "from Assignments, Accounts, Banks, Vehicles, AccountsPersons, ContactInfos, AccountsStatus\n" +
+                "where idAccounts = Assignments.Accounts_idAccounts\n" +
+                "and idAccounts = AccountsStatus.Accounts_idAccounts\n" +
+                "and Banks_idBanks = idBanks\n" +
+                "and idAccounts = Vehicles.Accounts_idAccounts\n" +
+                "and idAccounts = AccountsPersons.Accounts_idAccounts\n" +
+                "and idAccountsPersons = ContactInfos.idOwner\n" +
+                "and isResolved = 0\n" +
+                "and Assignments.Employees_idEmployees = "+eid+"\n" +
+                "and AccountsStatus."+field+" like \""+search+"\";";
+        return dao.queryTable(query);
+    }
 
+    public DefaultTableModel getSupervisorSearchTable(String field, String search){
+        String query = "select distinct idAccounts, Banks.name, Banks.branch, make, model, year, color, plateNumber, completeName, contactInfo\n" +
+                "from Assignments, Accounts, Banks, Vehicles, AccountsPersons, ContactInfos, AccountsStatus\n" +
+                "where idAccounts = Assignments.Accounts_idAccounts\n" +
+                "and idAccounts = AccountsStatus.Accounts_idAccounts\n" +
+                "and Banks_idBanks = idBanks\n" +
+                "and idAccounts = Vehicles.Accounts_idAccounts\n" +
+                "and idAccounts = AccountsPersons.Accounts_idAccounts\n" +
+                "and idAccountsPersons = ContactInfos.idOwner\n" +
+                "and isResolved = 0\n" +
+                "and AccountsStatus."+field+" like \""+search+"\";";
+        return dao.queryTable(query);
+    }
+    
     public DefaultTableModel getSupervisorTable(){
         String query = "select idAccounts, Banks.name, Banks.branch, make, model, year, color, plateNumber, AccountsPersons.completeName, contactInfo, Employees.completeName\n" +
                 "from Assignments, Accounts, Banks, Vehicles, AccountsPersons, ContactInfos, Employees\n" +
